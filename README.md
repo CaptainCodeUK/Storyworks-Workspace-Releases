@@ -1,2 +1,2 @@
 # Writer
-Public release artefacts for the Writer applications
+Public releases for StoryWriter - A desktop application for creative writers
