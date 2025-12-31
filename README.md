@@ -1,2 +1,2 @@
-# Writer
-Public releases for StoryWriter - A desktop application for creative writers
+# Storyworks Workspace
+Public releases for Storyworks Workspace - A desktop application for creative writers
