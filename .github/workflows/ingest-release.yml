@@ -1,0 +1,41 @@
+# Publishes GitHub Release metadata into the shared Cloudflare D1 catalog
+# (sites_releases) via the sites-releases worker.
+#
+# Secrets / variables on this repo:
+#   STORYWORKS_RELEASES_INGEST_TOKEN  — same value as Worker secret INGEST_TOKEN_STORYWORKS
+#   RELEASES_INGEST_URL               — https://sites-releases.captain-code.workers.dev
+#                                       (no trailing slash)
+
+name: Ingest GitHub Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Send release to catalog
+        env:
+          TOKEN: ${{ secrets.STORYWORKS_RELEASES_INGEST_TOKEN }}
+          ENDPOINT: ${{ vars.RELEASES_INGEST_URL }}
+          RELEASE_ID: ${{ github.event.release.id }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          if [ -z "${TOKEN:-}" ] || [ -z "${ENDPOINT:-}" ]; then
+            echo "STORYWORKS_RELEASES_INGEST_TOKEN or RELEASES_INGEST_URL is not set; skipping ingest."
+            exit 0
+          fi
+          curl -fsSL \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/${RELEASE_ID}" \
+            -o /tmp/release.json
+          curl -fsS -X POST "${ENDPOINT}/t/storyworks/ingest" \
+            -H "Authorization: Bearer ${TOKEN}" \
+            -H "Content-Type: application/json" \
+            --data-binary @/tmp/release.json
