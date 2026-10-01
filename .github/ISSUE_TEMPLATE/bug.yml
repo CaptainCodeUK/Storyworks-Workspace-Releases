@@ -1,0 +1,33 @@
+name: Bug report
+description: Something in Storyworks isn't working
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Issues here are public, so please leave out personal details and manuscript text.
+  - type: dropdown
+    id: app
+    attributes:
+      label: Which app?
+      options:
+        - Workspace (desktop)
+        - Notes (mobile)
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Help → About in Workspace, or the bottom of Settings in Notes
+  - type: input
+    id: platform
+    attributes:
+      label: Operating system
+      placeholder: e.g. Windows 11, macOS 15, Ubuntu 24.04, Android 15
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What you did, what you expected, and what happened instead.
+    validations:
+      required: true

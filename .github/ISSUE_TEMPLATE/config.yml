@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: No GitHub account? Use the report form
+    url: https://trystoryworks.app/support
+    about: Send a bug, idea or question without signing in to GitHub. You can also use Help → Report an Issue in Workspace, or Settings → Report an issue in Notes.

@@ -1,0 +1,19 @@
+name: Idea
+description: Suggest something new or better
+labels: [enhancement]
+body:
+  - type: dropdown
+    id: app
+    attributes:
+      label: Which app?
+      options:
+        - Workspace (desktop)
+        - Notes (mobile)
+        - Both / not sure
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like?
+      description: Tell us what you're trying to do and how it could work.
+    validations:
+      required: true
